@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+@theme {
+  --color-space-darkest: #050811;
+  --color-space-dark: #0a0e27;
+  --color-space-card: #0d1232;
+  --color-space-border: #1a2040;
+  --color-purple: #7c3aed;
+  --color-purple-light: #9f67ff;
+  --color-blue: #0ea5e9;
+  --color-gold: #f59e0b;
+  --color-pink: #ec4899;
+  --color-green: #10b981;
+  --color-red: #ef4444;
+}
+
+html {
+  background-color: #050811;
+}
+
+body {
+  background-color: #050811;
+  color: #e2e8f0;
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #7c3aed #0a0e27;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #0a0e27;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #7c3aed;
+  border-radius: 3px;
+}
+
+.cyber-card {
+  background: linear-gradient(135deg, #0d1232 0%, #0a0e27 100%);
+  border: 1px solid #1a2040;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.cyber-card:hover {
+  border-color: #7c3aed;
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+  transform: translateY(-2px);
+}
+
+.neon-text {
+  text-shadow: 0 0 10px currentColor;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #7c3aed, #0ea5e9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #7c3aed, #9f67ff);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #0ea5e9;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #0ea5e9;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(14, 165, 233, 0.1);
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.2);
+}
+
+.seat-available {
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid #0ea5e9;
+  color: #0ea5e9;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.seat-available:hover {
+  background: rgba(14, 165, 233, 0.3);
+}
+
+.seat-selected {
+  background: rgba(124, 58, 237, 0.5);
+  border: 1px solid #7c3aed;
+  color: white;
+}
+
+.seat-occupied {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.star-rating {
+  color: #f59e0b;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(124, 58, 237, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.6); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.4s ease-out;
+}
+
+.glass {
+  background: rgba(13, 18, 50, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+}
+
+.input-cyber {
+  background: rgba(10, 14, 39, 0.8);
+  border: 1px solid #1a2040;
+  border-radius: 8px;
+  color: #e2e8f0;
+  padding: 10px 14px;
+  width: 100%;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.input-cyber:focus {
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.input-cyber::placeholder {
+  color: #4a5568;
+}
+
+.badge-economy {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid #10b981;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.badge-business {
+  background: rgba(14, 165, 233, 0.2);
+  color: #0ea5e9;
+  border: 1px solid #0ea5e9;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.badge-first {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border: 1px solid #f59e0b;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.ticket-card {
+  background: linear-gradient(135deg, #0d1232, #0a0e27);
+  border: 1px solid #1a2040;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ticket-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #7c3aed, #0ea5e9, #f59e0b);
+}
