@@ -5,6 +5,8 @@ export const calculateRefund = (travelDate: string): number => {
   const travel = new Date(travelDate);
   const daysUntilTravel = differenceInDays(travel, today);
 
+  // If travel date is in the past or invalid, minimum refund applies
+  if (daysUntilTravel < 0) return 25;
   if (daysUntilTravel >= 30) return 100;
   if (daysUntilTravel >= 15) return 75;
   if (daysUntilTravel >= 7) return 50;
@@ -22,6 +24,7 @@ export const getRefundMessage = (travelDate: string): string => {
   const travel = new Date(travelDate);
   const daysUntilTravel = differenceInDays(travel, today);
 
+  if (daysUntilTravel < 0) return `${pct}% refund (travel date has passed)`;
   if (daysUntilTravel >= 30) return '100% refund (30+ days before travel)';
   if (daysUntilTravel >= 15) return '75% refund (15-30 days before travel)';
   if (daysUntilTravel >= 7) return '50% refund (7-15 days before travel)';
