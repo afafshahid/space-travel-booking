@@ -91,7 +91,7 @@ export const PaymentModal: React.FC = () => {
                 <div className="pt-3 border-t border-[#7c3aed]/20 flex justify-between font-bold">
                   <span className="text-[#e0e0e0]">Total</span>
                   <span className="text-[#f59e0b] text-xl">
-                    {formatPrice(booking.total_price)}
+                    {formatPrice(booking.price)}
                   </span>
                 </div>
               </div>
@@ -121,7 +121,7 @@ export const PaymentModal: React.FC = () => {
             )}
 
             <PaymentForm
-              amount={booking?.total_price || 0}
+              amount={booking?.price || 0}
               onSubmit={handlePayment}
               isLoading={isPending}
             />

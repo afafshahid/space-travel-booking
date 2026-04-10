@@ -10,7 +10,7 @@ export const tripsService = {
         destination:destinations(*),
         seats(id, is_available)
       `)
-      .eq('status', 'upcoming')
+      .eq('status', 'available')
       .order('departure_date', { ascending: true })
 
     const { data, error } = await query

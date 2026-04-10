@@ -34,7 +34,7 @@ export const SeatMap: React.FC<SeatMapProps> = ({
   onSeatSelect,
 }) => {
   const filteredSeats = useMemo(
-    () => seats.filter((s) => s.seat_class === selectedClass),
+    () => seats.filter((s) => s.class === selectedClass),
     [seats, selectedClass]
   )
 

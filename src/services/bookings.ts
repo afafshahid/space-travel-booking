@@ -14,12 +14,13 @@ export const bookingsService = {
   },
 
   async createBooking(params: {
-    userId: string
-    tripId: string
-    seatId: string
-    seatClass: SeatClass
-    totalPrice: number
-  }): Promise<Booking> {
+  userId: string
+  tripId: string
+  seatId: string
+  seatClass: SeatClass
+  totalPrice: number
+  travelDate?: string
+}): Promise<Booking> {
     // Check seat availability
     const { data: seat, error: seatError } = await supabase
       .from('seats')
@@ -37,29 +38,49 @@ export const bookingsService = {
         user_id: params.userId,
         trip_id: params.tripId,
         seat_id: params.seatId,
-        seat_class: params.seatClass,
-        total_price: params.totalPrice,
+        class: params.seatClass,
+        price: params.totalPrice,
         status: 'pending',
         booking_date: new Date().toISOString(),
+        travel_date: params.travelDate || new Date().toISOString().split('T')[0],
       })
-      .select('*, trip:trips(*, destination:destinations(*)), seat:seats(*)')
+      .select('*')
       .single()
 
     if (bookingError) throw bookingError
 
-    // Mark seat as unavailable
+        // Mark seat as unavailable
     const { error: updateError } = await supabase
       .from('seats')
-      .update({ is_available: false, booking_id: booking.id })
+      .update({ is_available: false, booked_by: booking.user_id })
       .eq('id', params.seatId)
 
     if (updateError) {
-      // Rollback booking if seat update fails
+      console.error('Seat update error:', updateError)
       await supabase.from('bookings').delete().eq('id', booking.id)
-      throw updateError
+      throw new Error(`Failed to update seat: ${updateError.message}`)
     }
 
-    return booking
+    // Verify seat was updated
+    const { data: verifySeats } = await supabase
+      .from('seats')
+      .select('is_available, booked_by')
+      .eq('id', params.seatId)
+      .single()
+    
+    console.log('Seat after update:', verifySeats)
+
+    await new Promise(resolve => setTimeout(resolve, 100))
+
+    // Fetch updated booking with relations
+    const { data: updatedBooking, error: fetchError } = await supabase
+      .from('bookings')
+      .select('*, trip:trips(*, destination:destinations(*)), seat:seats(*)')
+      .eq('id', booking.id)
+      .single()
+
+    if (fetchError) throw fetchError
+    return updatedBooking
   },
 
   async confirmBooking(bookingId: string): Promise<Booking> {
@@ -97,7 +118,7 @@ export const bookingsService = {
     const booking = await this.getBookingById(bookingId)
     const departureDate = booking.trip?.departure_date
     const refundAmount = departureDate
-      ? calculateRefundAmount(booking.total_price, departureDate)
+      ? calculateRefundAmount(booking.price, departureDate)
       : 0
 
     const { data, error } = await supabase
@@ -117,7 +138,7 @@ export const bookingsService = {
     if (booking.seat_id) {
       await supabase
         .from('seats')
-        .update({ is_available: true, booking_id: null })
+        .update({ is_available: true, booked_by: null })
         .eq('id', booking.seat_id)
     }
 

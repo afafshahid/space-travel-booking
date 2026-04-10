@@ -12,7 +12,7 @@ export const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({ tr
     {
       icon: '🚀',
       label: 'Launch',
-      time: formatDateTime(trip.departure_date),
+      time: formatDate(trip.departure_date),
       description: 'Lift-off from Earth',
       color: '#7c3aed',
     },
@@ -26,7 +26,7 @@ export const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({ tr
     {
       icon: '🌙',
       label: 'Arrival',
-      time: formatDateTime(trip.arrival_date),
+      time: formatDate(trip.return_date),
       description: `Landing at ${trip.destination?.name}`,
       color: '#10b981',
     },

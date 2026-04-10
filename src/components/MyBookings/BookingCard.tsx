@@ -105,7 +105,7 @@ export const BookingCard: React.FC<BookingCardProps> = ({ booking }) => {
                 <span className="font-mono text-[#e0e0e0]">{booking.seat?.seat_number}</span>
               </div>
               <div className="text-[#e0e0e0]">{formatSeatClass(booking.seat_class)}</div>
-              <div className="text-[#f59e0b] font-semibold">{formatPrice(booking.total_price)}</div>
+              <div className="text-[#f59e0b] font-semibold">{formatPrice(booking.price)}</div>
             </div>
 
             {/* Countdown */}

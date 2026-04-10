@@ -43,7 +43,7 @@ export const BookingSummary: React.FC<BookingSummaryProps> = ({
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-[#a0a0a0]">Return</span>
-          <span className="text-[#e0e0e0]">{formatDate(trip.arrival_date)}</span>
+          <span className="text-[#e0e0e0]">{formatDate(trip.return_date)}</span>
         </div>
       </div>
 

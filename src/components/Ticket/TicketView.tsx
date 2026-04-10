@@ -170,7 +170,7 @@ export const TicketView: React.FC<TicketViewProps> = ({ booking }) => {
                 <div className="bg-[#050811]/50 rounded-xl p-3">
                   <p className="text-[#a0a0a0] text-xs mb-1">Price Paid</p>
                   <p className="text-[#10b981] font-bold text-sm">
-                    {formatPrice(booking.total_price)}
+                    {formatPrice(booking.price)}
                   </p>
                 </div>
                 <div className="bg-[#050811]/50 rounded-xl p-3">

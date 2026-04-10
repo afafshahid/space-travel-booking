@@ -52,7 +52,7 @@ export const PaymentSuccess: React.FC<PaymentSuccessProps> = ({ booking }) => {
         </div>
         <div className="flex justify-between text-sm font-bold pt-2 border-t border-[#10b981]/20">
           <span className="text-[#e0e0e0]">Total Paid</span>
-          <span className="text-[#f59e0b]">{formatPrice(booking.total_price)}</span>
+          <span className="text-[#f59e0b]">{formatPrice(booking.price)}</span>
         </div>
       </div>
 

@@ -21,7 +21,7 @@ export const CancellationModal: React.FC<CancellationModalProps> = ({
   const departureDate = booking.trip?.departure_date || ''
   const refundPolicy = departureDate ? getRefundPolicy(departureDate) : null
   const refundAmount = refundPolicy
-    ? booking.total_price * (refundPolicy.percentage / 100)
+    ? booking.price * (refundPolicy.percentage / 100)
     : 0
 
   const handleConfirm = async () => {
@@ -79,7 +79,7 @@ export const CancellationModal: React.FC<CancellationModalProps> = ({
                 <div className="text-right">
                   <p className="text-[#10b981] font-bold">{formatPrice(refundAmount)}</p>
                   <p className="text-[#a0a0a0] text-xs">
-                    ({refundPolicy.percentage}% of {formatPrice(booking.total_price)}) ·{' '}
+                    ({refundPolicy.percentage}% of {formatPrice(booking.price)}) ·{' '}
                     {refundPolicy.label}
                   </p>
                 </div>

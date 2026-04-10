@@ -23,15 +23,13 @@ export const paymentsService = {
       throw new Error('Payment declined. Please check your card details.')
     }
 
-    const lastFour = cleanCardNumber.slice(-4)
-
     const { data, error } = await supabase
       .from('payments')
       .insert({
         booking_id: params.bookingId,
         amount: params.amount,
         status: 'completed',
-        card_last_four: lastFour,
+        transaction_id: `TXN-${Date.now()}`,
       })
       .select('*')
       .single()

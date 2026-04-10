@@ -29,26 +29,29 @@ export const useCreateBooking = () => {
   const { setPendingBooking } = useBookingStore()
 
   return useMutation({
-    mutationFn: async ({
+  mutationFn: async ({
+    tripId,
+    seatId,
+    seatClass,
+    totalPrice,
+    travelDate,
+  }: {
+    tripId: string
+    seatId: string
+    seatClass: SeatClass
+    totalPrice: number
+    travelDate: string
+  }) => {
+    if (!user) throw new Error('Not authenticated')
+    return bookingsService.createBooking({
+      userId: user.id,
       tripId,
       seatId,
       seatClass,
       totalPrice,
-    }: {
-      tripId: string
-      seatId: string
-      seatClass: SeatClass
-      totalPrice: number
-    }) => {
-      if (!user) throw new Error('Not authenticated')
-      return bookingsService.createBooking({
-        userId: user.id,
-        tripId,
-        seatId,
-        seatClass,
-        totalPrice,
-      })
-    },
+      travelDate,
+    })
+  },
     onSuccess: (booking) => {
       setPendingBooking(booking)
       queryClient.invalidateQueries({ queryKey: ['bookings'] })
@@ -70,7 +73,7 @@ export const useProcessPayment = () => {
 
       const payment = await paymentsService.processPayment({
         bookingId: pendingBooking.id,
-        amount: pendingBooking.total_price,
+        amount: pendingBooking.price,
         formData,
       })
 

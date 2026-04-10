@@ -22,12 +22,13 @@ export interface Trip {
   destination_id: string
   destination?: Destination
   departure_date: string
-  arrival_date: string
+  return_date: string
   capacity: number
   economy_price: number
   business_price: number
   first_class_price: number
   status: 'upcoming' | 'ongoing' | 'completed' | 'cancelled'
+  total_seats: number
   created_at: string
   average_rating?: number
   available_seats?: number
@@ -38,9 +39,9 @@ export interface Seat {
   id: string
   trip_id: string
   seat_number: string
-  seat_class: SeatClass
+  class: SeatClass
   is_available: boolean
-  booking_id?: string | null
+  booked_by?: string | null
 }
 
 export type SeatClass = 'economy' | 'business' | 'first_class'
@@ -52,8 +53,8 @@ export interface Booking {
   trip?: Trip
   seat_id: string
   seat?: Seat
-  seat_class: SeatClass
-  total_price: number
+  class: SeatClass
+  price: number
   status: 'confirmed' | 'cancelled' | 'pending'
   booking_date: string
   cancellation_reason?: string
@@ -77,7 +78,7 @@ export interface Review {
 
 export interface Payment {
   id: string
-  booking_id: string
+  booked_by?: string | null
   amount: number
   status: 'pending' | 'completed' | 'failed' | 'refunded'
   card_last_four?: string

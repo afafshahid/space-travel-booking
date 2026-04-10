@@ -40,6 +40,7 @@ export const BookingFlow: React.FC = () => {
         seatId: selectedSeat.id,
         seatClass: selectedClass,
         totalPrice: price,
+        travelDate: trip.departure_date,
       })
       navigate('/payment')
     } catch {
@@ -103,7 +104,7 @@ export const BookingFlow: React.FC = () => {
                 trip={trip}
                 selectedClass={selectedClass}
                 onClassChange={handleClassChange}
-                seats={seats || []}
+                seats={seats?.map((s: any) => ({ ...s, seat_class: s.class })) || []}
               />
             </div>
 

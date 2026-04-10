@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS bookings (
   trip_id UUID NOT NULL REFERENCES trips(id) ON DELETE RESTRICT,
   seat_id UUID NOT NULL REFERENCES seats(id) ON DELETE RESTRICT,
   seat_class TEXT NOT NULL CHECK (seat_class IN ('economy', 'business', 'first_class')),
-  total_price NUMERIC(12, 2) NOT NULL DEFAULT 0,
+  price NUMERIC(12, 2) NOT NULL DEFAULT 0,
   status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'cancelled')),
   booking_date TIMESTAMPTZ DEFAULT NOW(),
   cancellation_reason TEXT,
