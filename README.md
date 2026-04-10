@@ -1,4 +1,4 @@
-# 🚀 Space Travel Booking App
+# 🚀 Orbit X - Space Travel Booking App
 
 A complete, production-ready space travel booking application built with React 18, TypeScript, Supabase, and Tailwind CSS.
 

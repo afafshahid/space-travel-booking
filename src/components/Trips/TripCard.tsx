@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Clock, MapPin, Star, Users, Rocket } from 'lucide-react'
+import { motion } from 'framer-motion'
 import type { Trip } from '../../types'
 import { formatPrice, formatDate, formatDuration, formatDistance2 } from '../../utils/formatters'
 
@@ -49,7 +50,13 @@ export const TripCard: React.FC<TripCardProps> = ({ trip }) => {
   const isSoldOut = availableSeats === 0
 
   return (
-    <div className="group bg-[#0a0e27] border border-[#7c3aed]/20 rounded-2xl overflow-hidden hover:border-[#7c3aed]/50 hover:shadow-xl hover:shadow-[#7c3aed]/10 transition-all duration-300 flex flex-col">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -6, boxShadow: '0 20px 40px rgba(124,58,237,0.2)' }}
+      transition={{ duration: 0.3 }}
+      className="group bg-[#0a0e27] border border-[#7c3aed]/20 rounded-2xl overflow-hidden hover:border-[#7c3aed]/50 transition-colors duration-300 flex flex-col"
+    >
       {/* Image */}
       <div className="relative h-48 overflow-hidden">
         <img
@@ -124,19 +131,21 @@ export const TripCard: React.FC<TripCardProps> = ({ trip }) => {
               {formatPrice(trip.economy_price)}
             </p>
           </div>
-          <button
+          <motion.button
+            whileHover={isSoldOut ? {} : { scale: 1.07 }}
+            whileTap={isSoldOut ? {} : { scale: 0.95 }}
             onClick={() => navigate(`/booking/${trip.id}`)}
             disabled={isSoldOut}
-            className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
+            className={`px-4 py-2 rounded-lg font-semibold text-sm transition-shadow ${
               isSoldOut
                 ? 'bg-[#374151] text-[#6b7280] cursor-not-allowed'
-                : 'bg-gradient-to-r from-[#7c3aed] to-[#0ea5e9] text-white hover:shadow-lg hover:shadow-[#7c3aed]/30 hover:scale-105 active:scale-95'
+                : 'bg-gradient-to-r from-[#7c3aed] to-[#0ea5e9] text-white hover:shadow-lg hover:shadow-[#7c3aed]/30'
             }`}
           >
             {isSoldOut ? 'Sold Out' : 'Book Now'}
-          </button>
+          </motion.button>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

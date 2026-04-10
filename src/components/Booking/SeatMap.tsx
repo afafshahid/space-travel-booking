@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import type { Seat, SeatClass } from '../../types'
 
 interface SeatMapProps {
@@ -105,8 +106,17 @@ export const SeatMap: React.FC<SeatMapProps> = ({
                       const isBooked = !seat.is_available
 
                       return (
-                        <button
+                        <motion.button
                           key={seat.id}
+                          layout
+                          whileHover={!isBooked ? { scale: 1.15 } : {}}
+                          whileTap={!isBooked ? { scale: 0.9 } : {}}
+                          animate={
+                            isSelected
+                              ? { scale: [1, 1.2, 1.1], boxShadow: ['0 0 0px #f59e0b', '0 0 12px #f59e0b', '0 0 8px #f59e0b'] }
+                              : { scale: 1, boxShadow: '0 0 0px transparent' }
+                          }
+                          transition={{ duration: 0.25 }}
                           onClick={() => !isBooked && onSeatSelect(seat)}
                           disabled={isBooked}
                           title={
@@ -114,18 +124,18 @@ export const SeatMap: React.FC<SeatMapProps> = ({
                               ? `${seat.seat_number} - Booked`
                               : `${seat.seat_number} - Click to select`
                           }
-                          className={`w-8 h-8 rounded-sm text-xs font-medium transition-all flex items-center justify-center ${
+                          className={`w-8 h-8 rounded-sm text-xs font-medium transition-colors flex items-center justify-center ${
                             isBooked
                               ? 'bg-[#ef4444]/70 text-[#ef4444]/50 cursor-not-allowed'
                               : isSelected
-                              ? `${colors.selected} text-[#050811] scale-110 shadow-lg`
+                              ? `${colors.selected} text-[#050811]`
                               : `${colors.available} text-white cursor-pointer`
                           }`}
                           aria-label={`Seat ${seat.seat_number} ${isBooked ? 'booked' : isSelected ? 'selected' : 'available'}`}
                         >
                           {seat.seat_number.replace(/[A-Z]/gi, '').slice(0, 2) ||
                             seat.seat_number.slice(0, 2)}
-                        </button>
+                        </motion.button>
                       )
                     })}
                 </div>

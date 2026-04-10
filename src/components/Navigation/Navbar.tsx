@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Rocket, Menu, X, LogOut, User, BookOpen, Star } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useAuthStore } from '../../store/authStore'
 import toast from 'react-hot-toast'
 
@@ -40,7 +41,7 @@ export const Navbar: React.FC = () => {
               <Rocket className="w-4 h-4 text-white" />
             </div>
             <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#7c3aed] to-[#0ea5e9] text-lg hidden sm:block">
-              SpaceTravel
+              Orbit X
             </span>
           </Link>
 
@@ -110,62 +111,70 @@ export const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden border-t border-[#7c3aed]/20 bg-[#050811]/95 backdrop-blur-md">
-          <div className="px-4 py-4 space-y-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                onClick={() => setIsMenuOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
-                  isActive(link.path)
-                    ? 'bg-[#7c3aed]/20 text-[#7c3aed]'
-                    : 'text-[#a0a0a0] hover:text-white hover:bg-white/5'
-                }`}
-              >
-                {link.icon}
-                {link.label}
-              </Link>
-            ))}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden border-t border-[#7c3aed]/20 bg-[#050811]/95 backdrop-blur-md overflow-hidden"
+          >
+            <div className="px-4 py-4 space-y-2">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
+                    isActive(link.path)
+                      ? 'bg-[#7c3aed]/20 text-[#7c3aed]'
+                      : 'text-[#a0a0a0] hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  {link.icon}
+                  {link.label}
+                </Link>
+              ))}
 
-            {isAuthenticated ? (
-              <div className="pt-3 border-t border-[#7c3aed]/20">
-                <div className="flex items-center gap-2 px-4 py-2 mb-2">
-                  <User className="w-4 h-4 text-[#7c3aed]" />
-                  <span className="text-sm text-[#e0e0e0]">
-                    {user?.full_name || user?.email || 'User'}
-                  </span>
+              {isAuthenticated ? (
+                <div className="pt-3 border-t border-[#7c3aed]/20">
+                  <div className="flex items-center gap-2 px-4 py-2 mb-2">
+                    <User className="w-4 h-4 text-[#7c3aed]" />
+                    <span className="text-sm text-[#e0e0e0]">
+                      {user?.full_name || user?.email || 'User'}
+                    </span>
+                  </div>
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-[#ec4899] hover:bg-[#ec4899]/10 transition-all text-sm"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Sign Out
+                  </button>
                 </div>
-                <button
-                  onClick={handleSignOut}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-[#ec4899] hover:bg-[#ec4899]/10 transition-all text-sm"
-                >
-                  <LogOut className="w-4 h-4" />
-                  Sign Out
-                </button>
-              </div>
-            ) : (
-              <div className="pt-3 border-t border-[#7c3aed]/20 space-y-2">
-                <Link
-                  to="/login"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block px-4 py-3 rounded-lg text-[#a0a0a0] hover:text-white hover:bg-white/5 transition-all text-sm"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  to="/signup"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block px-4 py-3 rounded-lg bg-gradient-to-r from-[#7c3aed] to-[#0ea5e9] text-white text-sm text-center"
-                >
-                  Get Started
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+              ) : (
+                <div className="pt-3 border-t border-[#7c3aed]/20 space-y-2">
+                  <Link
+                    to="/login"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block px-4 py-3 rounded-lg text-[#a0a0a0] hover:text-white hover:bg-white/5 transition-all text-sm"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/signup"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block px-4 py-3 rounded-lg bg-gradient-to-r from-[#7c3aed] to-[#0ea5e9] text-white text-sm text-center"
+                  >
+                    Get Started
+                  </Link>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   )
 }

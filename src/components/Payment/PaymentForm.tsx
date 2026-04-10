@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { CreditCard, Lock, AlertCircle } from 'lucide-react'
+import { motion } from 'framer-motion'
 import type { PaymentFormData } from '../../types'
 import { formatCardNumber, formatExpiryDate } from '../../utils/formatters'
 import {
@@ -64,17 +65,26 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ amount, onSubmit, isLo
     }`
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <motion.form
+      onSubmit={handleSubmit}
+      className="space-y-4"
+      initial="hidden"
+      animate="visible"
+      variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
+    >
       {/* Test Card Info */}
-      <div className="flex items-start gap-2 p-3 bg-[#0ea5e9]/10 border border-[#0ea5e9]/20 rounded-lg">
+      <motion.div
+        variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
+        className="flex items-start gap-2 p-3 bg-[#0ea5e9]/10 border border-[#0ea5e9]/20 rounded-lg"
+      >
         <AlertCircle className="w-4 h-4 text-[#0ea5e9] mt-0.5 flex-shrink-0" />
         <p className="text-[#0ea5e9] text-xs">
           Test mode: Use card <strong>4242 4242 4242 4242</strong>, any future expiry, any CVC
         </p>
-      </div>
+      </motion.div>
 
       {/* Card Number */}
-      <div>
+      <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
         <label className="block text-[#e0e0e0] text-sm font-medium mb-1.5">Card Number</label>
         <div className="relative">
           <input
@@ -91,10 +101,13 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ amount, onSubmit, isLo
         {errors.cardNumber && (
           <p className="text-[#ec4899] text-xs mt-1">{errors.cardNumber}</p>
         )}
-      </div>
+      </motion.div>
 
       {/* Expiry + CVC */}
-      <div className="grid grid-cols-2 gap-4">
+      <motion.div
+        variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
+        className="grid grid-cols-2 gap-4"
+      >
         <div>
           <label className="block text-[#e0e0e0] text-sm font-medium mb-1.5">Expiry Date</label>
           <input
@@ -127,10 +140,10 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ amount, onSubmit, isLo
           />
           {errors.cvc && <p className="text-[#ec4899] text-xs mt-1">{errors.cvc}</p>}
         </div>
-      </div>
+      </motion.div>
 
       {/* Cardholder Name */}
-      <div>
+      <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
         <label className="block text-[#e0e0e0] text-sm font-medium mb-1.5">Cardholder Name</label>
         <input
           type="text"
@@ -147,13 +160,16 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ amount, onSubmit, isLo
         {errors.cardholderName && (
           <p className="text-[#ec4899] text-xs mt-1">{errors.cardholderName}</p>
         )}
-      </div>
+      </motion.div>
 
       {/* Submit */}
-      <button
+      <motion.button
+        variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
         type="submit"
         disabled={isLoading}
-        className="w-full py-4 bg-gradient-to-r from-[#7c3aed] to-[#0ea5e9] text-white font-bold rounded-xl hover:shadow-lg hover:shadow-[#7c3aed]/30 transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg"
+        className="w-full py-4 bg-gradient-to-r from-[#7c3aed] to-[#0ea5e9] text-white font-bold rounded-xl hover:shadow-lg hover:shadow-[#7c3aed]/30 transition-shadow disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg"
       >
         {isLoading ? (
           <>
@@ -166,12 +182,12 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ amount, onSubmit, isLo
             Pay Now
           </>
         )}
-      </button>
+      </motion.button>
 
       <p className="text-center text-[#a0a0a0] text-xs flex items-center justify-center gap-1">
         <Lock className="w-3 h-3" />
-        Secured by SpaceTravel Payments
+        Secured by Orbit X Payments
       </p>
-    </form>
+    </motion.form>
   )
 }
