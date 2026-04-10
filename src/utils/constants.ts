@@ -48,6 +48,11 @@ export const DESTINATIONS = {
   MOON: 'Moon',
   MARS: 'Mars',
   ISS: 'ISS',
+  VENUS: 'Venus',
+  JUPITER: 'Jupiter',
+  SATURN: 'Saturn',
+  EUROPA: 'Europa',
+  PROXIMA_CENTAURI: 'Proxima Centauri',
 }
 
 export const APP_NAME = 'Orbit X'

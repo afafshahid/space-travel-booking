@@ -5,7 +5,7 @@ A complete, production-ready space travel booking application built with React 1
 ## ✨ Features
 
 - 🔐 **Authentication** - Secure email/password auth via Supabase Auth
-- 🌌 **Explore Trips** - Browse Moon, Mars, and ISS destinations with filters
+- 🌌 **Explore Trips** - Browse Moon, Mars, ISS, Venus, Jupiter, Saturn, Europa, and Proxima Centauri destinations with filters
 - 🪑 **Interactive Seat Map** - Real-time seat availability with visual selection
 - 💳 **Payment Flow** - Simulated payment processing with card validation
 - 🎫 **Digital Tickets** - Beautiful boarding pass with QR code generation
