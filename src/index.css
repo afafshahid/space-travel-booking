@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #050811;
+    color: #e0e0e0;
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0a0e27;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #7c3aed;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #0ea5e9;
+  }
+}
+
+@layer components {
+  .cyber-card {
+    @apply bg-[#0a0e27] border border-[#7c3aed]/30 rounded-xl;
+  }
+
+  .cyber-button {
+    @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300;
+  }
+
+  .cyber-button-primary {
+    @apply cyber-button bg-gradient-to-r from-[#7c3aed] to-[#0ea5e9] text-white hover:shadow-lg hover:shadow-[#7c3aed]/50 hover:scale-105;
+  }
+
+  .cyber-button-secondary {
+    @apply cyber-button bg-transparent border border-[#7c3aed] text-[#7c3aed] hover:bg-[#7c3aed]/10;
+  }
+
+  .cyber-button-danger {
+    @apply cyber-button bg-gradient-to-r from-[#ec4899] to-[#ef4444] text-white hover:shadow-lg hover:shadow-[#ec4899]/50;
+  }
+
+  .cyber-input {
+    @apply w-full bg-[#0a0e27] border border-[#7c3aed]/50 rounded-lg px-4 py-3 text-[#e0e0e0] placeholder-[#a0a0a0] focus:outline-none focus:border-[#0ea5e9] focus:ring-1 focus:ring-[#0ea5e9] transition-colors;
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
+  }
+
+  .glow-green {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+  }
+
+  .text-gradient {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-[#7c3aed] to-[#0ea5e9];
+  }
+
+  .star-filled {
+    color: #f59e0b;
+  }
+
+  .star-empty {
+    color: #374151;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
