@@ -50,5 +50,5 @@ export const DESTINATIONS = {
   ISS: 'ISS',
 }
 
-export const APP_NAME = 'Space Travel Booking'
-export const APP_TAGLINE = 'Your Gateway to the Stars'
+export const APP_NAME = 'Orbit X'
+export const APP_TAGLINE = 'Your Ultimate Space Journey'

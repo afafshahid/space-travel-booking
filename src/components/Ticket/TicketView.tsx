@@ -92,7 +92,7 @@ export const TicketView: React.FC<TicketViewProps> = ({ booking }) => {
                     <Rocket className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="text-[#a0a0a0] text-xs">SpaceTravel Booking</p>
+                    <p className="text-[#a0a0a0] text-xs">Orbit X</p>
                     <p className="text-white font-bold">BOARDING PASS</p>
                   </div>
                 </div>

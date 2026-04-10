@@ -12,7 +12,7 @@ export const Footer: React.FC = () => {
               <Rocket className="w-3 h-3 text-white" />
             </div>
             <span className="text-[#a0a0a0] text-sm">
-              © 2026 SpaceTravel. All rights reserved.
+              © 2026 Orbit X. All rights reserved.
             </span>
           </div>
           <div className="flex items-center gap-4 text-[#a0a0a0] text-sm">

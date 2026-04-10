@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from 'react-hot-toast'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useAuthStore } from './store/authStore'
 import { authService } from './services/auth'
 import { Navbar } from './components/Navigation/Navbar'
@@ -29,66 +30,27 @@ const queryClient = new QueryClient({
   },
 })
 
-const AppContent: React.FC = () => {
-  const { isLoading, setUser, setLoading } = useAuthStore()
+const pageVariants = {
+  initial: { opacity: 0, y: 8 },
+  in: { opacity: 1, y: 0 },
+  out: { opacity: 0, y: -8 },
+}
 
-  useEffect(() => {
-    // Initialize auth
-    const initAuth = async () => {
-      setLoading(true)
-      try {
-        const session = await authService.getSession()
-        if (session?.user) {
-          const appUser: AppUser = {
-            id: session.user.id,
-            email: session.user.email || '',
-            full_name: session.user.user_metadata?.full_name,
-            created_at: session.user.created_at,
-          }
-          setUser(appUser)
-        } else {
-          setUser(null)
-        }
-      } catch {
-        setUser(null)
-      } finally {
-        setLoading(false)
-      }
-    }
+const pageTransition = { duration: 0.25, ease: 'easeInOut' }
 
-    initAuth()
-
-    // Listen for auth changes
-    const { data: listener } = authService.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session && typeof session === 'object' && 'user' in session) {
-        const s = session as { user: { id: string; email?: string; user_metadata?: { full_name?: string }; created_at: string } }
-        if (s.user) {
-          setUser({
-            id: s.user.id,
-            email: s.user.email || '',
-            full_name: s.user.user_metadata?.full_name,
-            created_at: s.user.created_at,
-          })
-        }
-      } else if (event === 'SIGNED_OUT') {
-        setUser(null)
-      }
-    })
-
-    return () => {
-      listener?.subscription?.unsubscribe()
-    }
-  }, [setUser, setLoading])
-
-  if (isLoading) {
-    return <FullPageLoader text="Initializing SpaceTravel..." />
-  }
-
+const AnimatedRoutes: React.FC = () => {
+  const location = useLocation()
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-1">
-        <Routes>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        initial="initial"
+        animate="in"
+        exit="out"
+        variants={pageVariants}
+        transition={pageTransition}
+      >
+        <Routes location={location}>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -147,6 +109,71 @@ const AppContent: React.FC = () => {
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+      </motion.div>
+    </AnimatePresence>
+  )
+}
+
+const AppContent: React.FC = () => {
+  const { isLoading, setUser, setLoading } = useAuthStore()
+
+  useEffect(() => {
+    // Initialize auth
+    const initAuth = async () => {
+      setLoading(true)
+      try {
+        const session = await authService.getSession()
+        if (session?.user) {
+          const appUser: AppUser = {
+            id: session.user.id,
+            email: session.user.email || '',
+            full_name: session.user.user_metadata?.full_name,
+            created_at: session.user.created_at,
+          }
+          setUser(appUser)
+        } else {
+          setUser(null)
+        }
+      } catch {
+        setUser(null)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    initAuth()
+
+    // Listen for auth changes
+    const { data: listener } = authService.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session && typeof session === 'object' && 'user' in session) {
+        const s = session as { user: { id: string; email?: string; user_metadata?: { full_name?: string }; created_at: string } }
+        if (s.user) {
+          setUser({
+            id: s.user.id,
+            email: s.user.email || '',
+            full_name: s.user.user_metadata?.full_name,
+            created_at: s.user.created_at,
+          })
+        }
+      } else if (event === 'SIGNED_OUT') {
+        setUser(null)
+      }
+    })
+
+    return () => {
+      listener?.subscription?.unsubscribe()
+    }
+  }, [setUser, setLoading])
+
+  if (isLoading) {
+    return <FullPageLoader text="Initializing Orbit X..." />
+  }
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-1">
+        <AnimatedRoutes />
       </main>
       <Footer />
     </div>
