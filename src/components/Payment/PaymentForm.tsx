@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { CreditCard, Lock, AlertCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
 import type { PaymentFormData } from '../../types'
-import { formatCardNumber, formatExpiryDate } from '../../utils/formatters'
+import { formatCardNumber } from '../../utils/formatters'
 import {
   validateCardNumber,
   validateExpiryDate,
@@ -50,11 +50,10 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ amount, onSubmit, isLo
   }
 
   const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatExpiryDate(e.target.value)
-    if (formatted.length <= 5) {
-      setFormData((prev) => ({ ...prev, expiryDate: formatted }))
-      if (errors.expiryDate) setErrors((prev) => ({ ...prev, expiryDate: undefined }))
-    }
+    const digits = e.target.value.replace(/\D/g, '').slice(0, 4)
+    const formatted = digits.length > 2 ? digits.slice(0, 2) + '/' + digits.slice(2, 4) : digits.slice(0, 2)
+    setFormData((prev) => ({ ...prev, expiryDate: formatted }))
+    if (errors.expiryDate) setErrors((prev) => ({ ...prev, expiryDate: undefined }))
   }
 
   const inputClass = (error?: string) =>
