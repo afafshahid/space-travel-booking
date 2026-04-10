@@ -51,10 +51,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ amount, onSubmit, isLo
 
   const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const digits = e.target.value.replace(/\D/g, '').slice(0, 4)
-    let formatted = digits.slice(0, 2)
-    if (digits.length > 2) {
-      formatted = digits.slice(0, 2) + '/' + digits.slice(2, 4)
-    }
+    const formatted = digits.length > 2 ? digits.slice(0, 2) + '/' + digits.slice(2, 4) : digits.slice(0, 2)
     setFormData((prev) => ({ ...prev, expiryDate: formatted }))
     if (errors.expiryDate) setErrors((prev) => ({ ...prev, expiryDate: undefined }))
   }
