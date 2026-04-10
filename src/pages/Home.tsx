@@ -4,6 +4,12 @@ import { Rocket, Moon, MapPin, Shield, Star, ArrowRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useAuthStore } from '../store/authStore'
 
+const STAR_COUNT = 50
+const STAR_TOP_STEP = 17
+const STAR_TOP_OFFSET = 7
+const STAR_LEFT_STEP = 23
+const STAR_LEFT_OFFSET = 13
+
 const FEATURES = [
   { icon: '🚀', title: 'Real-time Booking', desc: 'Live seat maps with instant confirmation' },
   { icon: '🛸', title: 'Multiple Destinations', desc: 'Moon, Mars, ISS and beyond' },
@@ -33,13 +39,13 @@ export const Home: React.FC = () => {
           />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#7c3aed]/5 rounded-full blur-3xl" />
           {/* Stars */}
-          {Array.from({ length: 50 }).map((_, i) => (
+          {Array.from({ length: STAR_COUNT }).map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-white rounded-full"
               style={{
-                top: `${(i * 17 + 7) % 100}%`,
-                left: `${(i * 23 + 13) % 100}%`,
+                top: `${(i * STAR_TOP_STEP + STAR_TOP_OFFSET) % 100}%`,
+                left: `${(i * STAR_LEFT_STEP + STAR_LEFT_OFFSET) % 100}%`,
               }}
               animate={{ opacity: [0.1, 0.6, 0.1] }}
               transition={{

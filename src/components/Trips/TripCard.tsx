@@ -51,8 +51,6 @@ export const TripCard: React.FC<TripCardProps> = ({ trip }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -6, boxShadow: '0 20px 40px rgba(124,58,237,0.2)' }}
       transition={{ duration: 0.3 }}
       className="group bg-[#0a0e27] border border-[#7c3aed]/20 rounded-2xl overflow-hidden hover:border-[#7c3aed]/50 transition-colors duration-300 flex flex-col"

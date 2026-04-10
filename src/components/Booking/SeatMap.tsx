@@ -110,13 +110,7 @@ export const SeatMap: React.FC<SeatMapProps> = ({
                           key={seat.id}
                           layout
                           whileHover={!isBooked ? { scale: 1.15 } : {}}
-                          whileTap={!isBooked ? { scale: 0.9 } : {}}
-                          animate={
-                            isSelected
-                              ? { scale: [1, 1.2, 1.1], boxShadow: ['0 0 0px #f59e0b', '0 0 12px #f59e0b', '0 0 8px #f59e0b'] }
-                              : { scale: 1, boxShadow: '0 0 0px transparent' }
-                          }
-                          transition={{ duration: 0.25 }}
+                          whileTap={!isBooked && !isSelected ? { scale: 0.85 } : {}}
                           onClick={() => !isBooked && onSeatSelect(seat)}
                           disabled={isBooked}
                           title={
@@ -128,7 +122,7 @@ export const SeatMap: React.FC<SeatMapProps> = ({
                             isBooked
                               ? 'bg-[#ef4444]/70 text-[#ef4444]/50 cursor-not-allowed'
                               : isSelected
-                              ? `${colors.selected} text-[#050811]`
+                              ? `${colors.selected} text-[#050811] shadow-[0_0_8px_#f59e0b]`
                               : `${colors.available} text-white cursor-pointer`
                           }`}
                           aria-label={`Seat ${seat.seat_number} ${isBooked ? 'booked' : isSelected ? 'selected' : 'available'}`}
