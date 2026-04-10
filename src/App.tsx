@@ -26,6 +26,8 @@ const queryClient = new QueryClient({
     queries: {
       retry: 1,
       refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 10,
     },
   },
 })
@@ -36,12 +38,12 @@ const pageVariants = {
   out: { opacity: 0, y: -8 },
 }
 
-const pageTransition = { duration: 0.25, ease: 'easeInOut' }
+const pageTransition = { duration: 0.15, ease: 'easeInOut' }
 
 const AnimatedRoutes: React.FC = () => {
   const location = useLocation()
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="popLayout">
       <motion.div
         key={location.pathname}
         initial="initial"
