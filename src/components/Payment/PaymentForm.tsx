@@ -68,23 +68,20 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ amount, onSubmit, isLo
     <motion.form
       onSubmit={handleSubmit}
       className="space-y-4"
-      initial="hidden"
-      animate="visible"
-      variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2 }}
     >
       {/* Test Card Info */}
-      <motion.div
-        variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
-        className="flex items-start gap-2 p-3 bg-[#0ea5e9]/10 border border-[#0ea5e9]/20 rounded-lg"
-      >
+      <div className="flex items-start gap-2 p-3 bg-[#0ea5e9]/10 border border-[#0ea5e9]/20 rounded-lg">
         <AlertCircle className="w-4 h-4 text-[#0ea5e9] mt-0.5 flex-shrink-0" />
         <p className="text-[#0ea5e9] text-xs">
           Test mode: Use card <strong>4242 4242 4242 4242</strong>, any future expiry, any CVC
         </p>
-      </motion.div>
+      </div>
 
       {/* Card Number */}
-      <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
+      <div>
         <label className="block text-[#e0e0e0] text-sm font-medium mb-1.5">Card Number</label>
         <div className="relative">
           <input
@@ -101,13 +98,10 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ amount, onSubmit, isLo
         {errors.cardNumber && (
           <p className="text-[#ec4899] text-xs mt-1">{errors.cardNumber}</p>
         )}
-      </motion.div>
+      </div>
 
       {/* Expiry + CVC */}
-      <motion.div
-        variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
-        className="grid grid-cols-2 gap-4"
-      >
+      <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-[#e0e0e0] text-sm font-medium mb-1.5">Expiry Date</label>
           <input
@@ -140,10 +134,10 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ amount, onSubmit, isLo
           />
           {errors.cvc && <p className="text-[#ec4899] text-xs mt-1">{errors.cvc}</p>}
         </div>
-      </motion.div>
+      </div>
 
       {/* Cardholder Name */}
-      <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
+      <div>
         <label className="block text-[#e0e0e0] text-sm font-medium mb-1.5">Cardholder Name</label>
         <input
           type="text"
@@ -160,11 +154,10 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ amount, onSubmit, isLo
         {errors.cardholderName && (
           <p className="text-[#ec4899] text-xs mt-1">{errors.cardholderName}</p>
         )}
-      </motion.div>
+      </div>
 
       {/* Submit */}
       <motion.button
-        variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         type="submit"

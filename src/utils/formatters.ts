@@ -57,7 +57,7 @@ export const formatCardNumber = (value: string): string => {
 
 export const formatExpiryDate = (value: string): string => {
   const cleaned = value.replace(/\D/g, '')
-  if (cleaned.length >= 2) {
+  if (cleaned.length > 2) {
     return cleaned.slice(0, 2) + '/' + cleaned.slice(2, 4)
   }
   return cleaned
